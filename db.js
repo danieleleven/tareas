@@ -1,4 +1,4 @@
-require("dotenv").config();
+//require("dotenv").config();
 
 const postgres = require("postgres");
 
@@ -13,12 +13,36 @@ function conectar(){
 }
 
 function leerTareas(){
+    return new Promise( async (bien,mal) => {
+
+        let conexion = conectar();
+
+        try{
+            let tareas = await conexion `SELECT * FROM tareas`;
+            bien(tareas);
+
+        }catch(error){
+            mal(error)
+
+        }finally{
+            conexion.end();
+        }
+        
+    });
+}  
+
+
+
+
+
+/*
+function leerTareas(){                                         // hay que refactorizar pa ra que no retorne callback([null,tareas]); si no que si sale bien que invoque el primero y que si sale mal invocar el segundo. ( hay que revisar promesas). Una vez que hayamos hecho eso ( refactorizado), cuando intentemos leer tareas salgamos por el middleware de "ocurrio un error"
     return new Promise(async callback => {
         let conexion = conectar();
 
         try{
 
-            let tareas = await conexion `SELECT * FROM tareas`;
+            let tareas = await conexion `SELECT * FROM pareas`;
 
            
 
@@ -33,11 +57,13 @@ function leerTareas(){
         }
     });
 }
+*/
 
 
-leerTareas().then(arrayResultado => {
+
+/*leerTareas().then(arrayResultado => {
     console.log(arrayResultado);
-});  
+}); */
 
 
 function crearTarea(textoTarea){
@@ -118,9 +144,9 @@ function editarEstadoTarea(id){
 }
 
 
-editarEstadoTarea(4).then(arrayResultado => {
+/*editarEstadoTarea(4).then(arrayResultado => {
     console.log(arrayResultado);
-});
+});*/
    
 
 function borrarTarea(id){
