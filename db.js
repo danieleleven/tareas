@@ -13,16 +13,16 @@ function conectar(){
 }
 
 function leerTareas(){
-    return new Promise( async (bien,mal) => {
+    return new Promise( async callback => {
 
         let conexion = conectar();
 
         try{
             let tareas = await conexion `SELECT * FROM tareas`;
-            bien(tareas);
+            callback([null,tareas]);
 
         }catch(error){
-            mal(error)
+            callback([error])
 
         }finally{
             conexion.end();
