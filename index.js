@@ -38,6 +38,20 @@ servidor.post("/nueva", async (peticion,respuesta,siguiente) => {
 
     respuesta.json({ resultado : "ok", id});
 });
+///////////////////////////////////____________________________________________________________________
+
+servidor.delete("/eliminar/:id([0-9]{1,9})", async (peticion, respuesta) => {
+    let id = Number(peticion.params.id);
+    let [error,count] = await borrarTarea(id);
+
+    if(error){
+        return siguiente(2);
+    }
+
+    respuesta.json({ resultado : count > 0 ? "ok" : "ko" });
+  }); 
+  
+///////////////////////////////////____________________________________________________________________
 
 servidor.use((error,peticion,respuesta,siguiente) => {
     // cualquier excepción que envíe el sistema (throw) será capturada por este middleware
