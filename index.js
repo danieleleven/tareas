@@ -9,6 +9,8 @@ const servidor = express();
 
 servidor.use(json());
 
+servidor.use("/",express.static("./TODO_front"));
+
 servidor.use("/pruebas-api",express.static("./pruebas_api"));
 
 
@@ -38,7 +40,7 @@ servidor.post("/nueva", async (peticion,respuesta,siguiente) => {
 
     respuesta.json({ resultado : "ok", id});
 });
-///////////////////////////////////____________________________________________________________________
+
 
 servidor.delete("/eliminar/:id([0-9]{1,9})", async (peticion, respuesta,siguiente) => {
     let id = Number(peticion.params.id);
@@ -73,10 +75,10 @@ servidor.put("/actualizar/:accion(1|2)/:id([0-9]{1,9})", async (peticion,respues
             return respuesta.json({ resultado : count > 0 ? "ok" : "ko" });
 
         case 2:
-
+            
             // usamos VAR para evitar conflicto de variables LET y facilitar la legibilidad si se crean estas variables las otras dos no se crearán las del caso uno
             var [error,count] = await editarEstadoTarea(id);
-
+            console.log(count)
             if(error){
                 return siguiente(2);
             }

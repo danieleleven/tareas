@@ -104,7 +104,7 @@ function editarTextoTarea(id,textoTarea){
 
             
 
-            callback([null,{count}]);
+            callback([null,count]);
 
         }catch(error){
             
@@ -131,7 +131,7 @@ function editarEstadoTarea(id){
 
             
 
-            callback([null,{count}]);
+            callback([null,count]);
 
         }catch(error){
             
